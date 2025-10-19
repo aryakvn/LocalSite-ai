@@ -40,6 +40,15 @@ class OpenAICompatibleProvider implements LLMProviderClient {
   }
 
   async getModels() {
+    // If using the OPENAI_COMPATIBLE provider and an explicit model is set via
+    // the OPENAI_COMPATIBLE_MODEL environment variable, return that model
+    // instead of attempting to list models from the remote service (some
+    // third-party OpenAI-compatible providers do not support listing models).
+    const envModel = process.env.OPENAI_COMPATIBLE_MODEL;
+    if (this.provider === LLMProvider.OPENAI_COMPATIBLE && envModel) {
+      return [{ id: envModel, name: envModel }];
+    }
+    
     const response = await this.client.models.list();
 
     // Remove duplicates based on model ID

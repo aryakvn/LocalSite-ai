@@ -118,6 +118,15 @@ You can use any OpenAI-compatible API:
    OPENAI_COMPATIBLE_API_BASE=https://api.of.provider.com/v1
    ```
 
+If your OpenAI-compatible provider does not support listing available models (some third-party or self-hosted providers), you can explicitly set a single model ID to use with the `OPENAI_COMPATIBLE_MODEL` environment variable. When set, the app will return this model instead of attempting to call the provider's models.list endpoint.
+
+Example `.env.local`:
+```
+OPENAI_COMPATIBLE_API_KEY=your_api_key
+OPENAI_COMPATIBLE_API_BASE=https://api.of.provider.com/v1
+OPENAI_COMPATIBLE_MODEL=gpt-4o-mini
+```
+
 ## Deployment
 
 ### Deploying on Vercel
